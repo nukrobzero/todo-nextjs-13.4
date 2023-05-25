@@ -4,7 +4,11 @@ import { prisma } from "@/db";
 import { revalidatePath } from "next/cache";
 
 export default async function Home() {
-  const todos = await prisma.todo.findMany();
+  const todos = await prisma.todo.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   //Create
   const createTodo = async (data: FormData) => {
