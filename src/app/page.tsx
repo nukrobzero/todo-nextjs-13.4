@@ -1,21 +1,15 @@
 import CreateTodo from "@/components/CreateTodo";
 import TodoList from "@/components/TodoList";
 import { prisma } from "@/db";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export default async function Home() {
-  const resData = await fetch(`http://localhost:3000/api/getTodo`, {
-    next: { tags: ["TodoDatas"] },
-  });
-  const todos = await resData.json();
+  const todos = await prisma.todo.findMany();
 
   //Create
   const createTodo = async (data: FormData) => {
     "use server";
-    const title = data.get("title")?.valueOf();
-    if (typeof title !== "string" || title.length === 0) {
-      throw new Error("Invalid Title");
-    }
+    const title = data.get("title") as string;
 
     await prisma.todo.create({
       data: {
@@ -23,7 +17,7 @@ export default async function Home() {
         complete: false,
       },
     });
-    revalidateTag("TodoDatas");
+    revalidatePath("/");
   };
 
   //Delete
@@ -35,7 +29,7 @@ export default async function Home() {
         id,
       },
     });
-    revalidateTag("TodoDatas");
+    revalidatePath("/");
   };
 
   //Toggle
@@ -43,7 +37,7 @@ export default async function Home() {
     "use server";
 
     await prisma.todo.update({ where: { id }, data: { complete } });
-    revalidateTag("TodoDatas");
+    revalidatePath("/");
   };
 
   return (
@@ -52,7 +46,7 @@ export default async function Home() {
         <h1 className="text-2xl text-slate-100 font-bold">Todo List</h1>
         <CreateTodo createTodo={createTodo} />
         <ul className="pl-4">
-          {todos.data.map((todo: any) => (
+          {todos.map((todo: any) => (
             <TodoList
               key={todo.id}
               {...todo}

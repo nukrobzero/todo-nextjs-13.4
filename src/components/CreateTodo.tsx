@@ -1,3 +1,4 @@
+"use client";
 interface CreateProps {
   createTodo: (data: FormData) => void;
 }
@@ -8,6 +9,7 @@ export default function CreateTodo({ createTodo }: CreateProps) {
       <form action={createTodo} className="flex gap-2">
         <div className="flex flex-col">
           <input
+            type="text"
             id="title"
             name="title"
             placeholder="Title"
