@@ -17,6 +17,7 @@ export default async function Home() {
         complete: false,
       },
     });
+
     revalidatePath("/");
   };
 
@@ -41,11 +42,11 @@ export default async function Home() {
   };
 
   return (
-    <div className="p-8">
-      <div>
-        <h1 className="text-2xl text-slate-100 font-bold">Todo List</h1>
+    <div className="max-w-xl mx-auto">
+      <div className="flex flex-col justify-center items-center my-8">
+        <h1 className="text-4xl text-slate-100 font-bold">Todo List</h1>
         <CreateTodo createTodo={createTodo} />
-        <ul className="pl-4">
+        <ul className="flex flex-col justify-center items-center w-full mx-auto">
           {todos.map((todo: any) => (
             <TodoList
               key={todo.id}

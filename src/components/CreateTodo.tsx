@@ -5,16 +5,16 @@ interface CreateProps {
 
 export default function CreateTodo({ createTodo }: CreateProps) {
   return (
-    <div className="p-8">
-      <form action={createTodo} className="flex gap-2">
-        <div className="flex flex-col">
+    <div className="p-8 w-full">
+      <form action={createTodo} className="flex gap-2 w-full">
+        <div className="flex flex-col w-full">
           <input
             type="text"
             id="title"
             name="title"
             placeholder="Title"
             required
-            className="p-2 bg-transparent rounded-md border"
+            className="p-2 w-full bg-transparent rounded-md border"
           />
         </div>
         <button
