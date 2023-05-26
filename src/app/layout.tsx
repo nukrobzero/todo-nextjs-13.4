@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} max-w-screen-xl mx-auto p-4 bg-slate-800 text-slate-100`}>
+      <body
+        className={`${inter.className} max-w-screen-xl mx-auto p-4 bg-slate-800 text-slate-100`}
+      >
+        <NextTopLoader />
         {children}
       </body>
     </html>
