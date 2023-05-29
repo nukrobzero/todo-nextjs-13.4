@@ -1,4 +1,5 @@
 "use client";
+import { useTransition } from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
 interface TodoProps {
@@ -16,6 +17,8 @@ export default function TodoList({
   toggleTodo,
   todoDelete,
 }: TodoProps) {
+  const [isPending, startTransition] = useTransition();
+
   return (
     <li className="flex items-center justify-between gap-x-24 w-full mx-auto px-8 py-2">
       <div className="flex gap-1 justify-center items-center">
@@ -24,7 +27,9 @@ export default function TodoList({
           type="checkbox"
           className="cursor-pointer peer"
           defaultChecked={complete}
-          onChange={(e) => toggleTodo(id, e.target.checked)}
+          onChange={(e) =>
+            startTransition(() => toggleTodo(id, e.target.checked))
+          }
         />
         <label
           htmlFor={id}
